@@ -32,6 +32,6 @@ typedef struct {
 void make_deck(Deck *deck);
 void shuffle(Deck *deck);
 Card deal_card(Deck *deck);
-void print_card(const Card card);
+int to_string(const Card card, char *str);
 
 #endif

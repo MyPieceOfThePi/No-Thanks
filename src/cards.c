@@ -27,6 +27,6 @@ Card deal_card(Deck *deck){
     return deck->cards[deck->top++];
 }
 
-char *to_string(const Card card){
-    return "[" + ranks[card.rank] + suits[card.suit] + "]";
+int to_string(const Card card, char *str){
+    return sprintf(str, "[%s%s]", ranks[card.rank], suits[card.suit]);
 }
