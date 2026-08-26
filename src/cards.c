@@ -8,7 +8,7 @@ const char *ranks[] = {"", " A", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9",
 void make_deck(Deck *deck){
     for(int s = 1; s <= 4; s++){
         for(int r = 1; r <= 13; r++){
-            deck->cards[s*13 + r - 14] = (Card) {.suit = s, .rank = r, .shown = false};
+            deck->cards[s*13 + r - 14] = (Card) {.suit = s, .rank = r};
         }
     }
     deck->top = 0;
@@ -27,10 +27,6 @@ Card deal_card(Deck *deck){
     return deck->cards[deck->top++];
 }
 
-void print_card(const Card card){
-    if(card.shown){
-        printf("[%s%s]", ranks[card.rank], suits[card.suit]);
-    } else{
-        printf("[ -- ]");
-    }
+char *to_string(const Card card){
+    return "[" + ranks[card.rank] + suits[card.suit] + "]";
 }
