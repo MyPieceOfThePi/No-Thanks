@@ -20,12 +20,13 @@ int score(const PlayerState *ps){
 }
 
 GameView make_game_view(const Game *g){
-        return (GameView) {
+    GameView gv = (GameView) {
         .upCard = g->upCard,
-        .playerState = g->players[g->player].playerState,
         .hist = &g->hist,
         .player = g->player
     };
+
+    for(int i = 0; i < NUM_PLAYERS; i++) gv.playerStates[i] = g->players[i].playerState;
 }
 
 void update_history(Game *g, Move mv){
@@ -51,7 +52,7 @@ void play_round(Game *g){
 
     while(true){
         GameView view = make_game_view(g);
-        action = curr->actionFn(&view, curr->state);
+        action = curr->playerState.numChips > 0 ? curr->actionFn(&view, curr->state) : TAKE;
         Move mv = {g->player, action, g->upCard};
         update_history(g, mv);
 
@@ -70,7 +71,7 @@ void play_round(Game *g){
     }
 }
 
-void play(Game *g) {
+int play(Game *g) {
     make_deck(&g->deck);
     shuffle(&g->deck);
 
@@ -83,4 +84,33 @@ void play(Game *g) {
         g->player++;
         g->player %= NUM_PLAYERS;
     }
+
+    int index = -1, lowScore = INT_MAX;
+    for(int i = 0; i < NUM_PLAYERS; i++){
+        g->scores[i] = score(&g->players[i].playerState);
+        if(g->scores[i] < lowScore){
+            lowScore = g->scores[i];
+            index = i;
+        }
+    }
+
+    return index;
+}
+
+// Builders 
+
+Player make_player(ActionFn actionFn, void *state){
+    return 
+    (Player) {
+                .actionFn = actionFn,
+                .state = state,
+                .playerState = (PlayerState) {.numChips = 0, .numCards = 0, .cards = {}}
+             };
+}
+
+Game make_game(Player players[NUM_PLAYERS]){
+    Game g = {0};
+    make_deck(&g.deck);
+    memcpy(g.players, players, NUM_PLAYERS * sizeof(Player));
+    return g;
 }

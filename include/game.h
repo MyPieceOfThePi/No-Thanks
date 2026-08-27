@@ -7,6 +7,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <limits.h>
+#include <string.h>
 
 #define NUM_PLAYERS 4
 #define NUM_CARDS (DECK_SIZE - 5 - NUM_PLAYERS)
@@ -44,7 +46,7 @@ typedef struct Player Player;
 typedef struct {
     PassedCard upCard;
     const MoveHistory *hist;
-    PlayerState playerState;
+    PlayerState playerStates[NUM_PLAYERS];
     int player;
 } GameView;
 
@@ -62,9 +64,13 @@ typedef struct {
     int player;
     Player players[NUM_PLAYERS];
     MoveHistory hist;
+    int scores[NUM_PLAYERS];
 } Game;
 
 int score(const PlayerState *ps);
-void play(Game *g);
+int play(Game *g);
+
+Player make_player(ActionFn actionFn, void *state);
+Game make_game(Player players[NUM_PLAYERS]);
 
 #endif
