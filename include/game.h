@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include <limits.h>
 #include <string.h>
+#include <time.h>
 
 #define NUM_PLAYERS 4
 #define NUM_CARDS (DECK_SIZE - 5 - NUM_PLAYERS)

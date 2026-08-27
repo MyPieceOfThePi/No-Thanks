@@ -16,7 +16,7 @@ int score(const PlayerState *ps){
         }
     }
 
-    return score;
+    return score - ps->numChips;
 }
 
 GameView make_game_view(const Game *g){
@@ -27,6 +27,8 @@ GameView make_game_view(const Game *g){
     };
 
     for(int i = 0; i < NUM_PLAYERS; i++) gv.playerStates[i] = g->players[i].playerState;
+
+    return gv;
 }
 
 void update_history(Game *g, Move mv){
@@ -104,7 +106,7 @@ Player make_player(ActionFn actionFn, void *state){
     (Player) {
                 .actionFn = actionFn,
                 .state = state,
-                .playerState = (PlayerState) {.numChips = 0, .numCards = 0, .cards = {}}
+                .playerState = (PlayerState) {.numChips = 6, .numCards = 0, .cards = {}}
              };
 }
 
