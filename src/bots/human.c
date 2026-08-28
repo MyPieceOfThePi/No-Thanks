@@ -11,18 +11,21 @@ void print_hand(PlayerState ps) {
         suitedcards[ps.cards[i].suit - 1][ps.cards[i].rank - 1] = ps.cards[i];
     }
     for (int i = 0; i < 4; i++) {
-        char str[512];
+        bool seperator = true;
         for (int j = 0; j < 13; j++) {
-            if (suitedcards[i][j].suit == UNDEF) { continue; }
-            to_string(suitedcards[i][j], str + j*6);
+            if (suitedcards[i][j].suit == UNDEF) { 
+                if (!seperator) { putchar('|'); seperator = true; }
+                continue; 
+            }
+            seperator = false;
+            print_card(suitedcards[i][j]);
         }
-        printf(str);
-        putc('\n', stdout);
+        putchar('\n');
     }
 }
 
 Action human_action(const GameView *gameView, void *state) {
-    printf("player %d:\n", gameView->player);
+    puts("\e[1;1H\e[2Jyour hand:");
     print_hand(gameView->playerStates[gameView->player]);
     return TAKE;
 }

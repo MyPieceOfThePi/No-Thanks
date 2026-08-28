@@ -33,5 +33,6 @@ void make_deck(Deck *deck);
 void shuffle(Deck *deck);
 Card deal_card(Deck *deck);
 int to_string(const Card card, char *str);
+int print_card(const Card card);
 
 #endif
