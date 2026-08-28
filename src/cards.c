@@ -30,3 +30,7 @@ Card deal_card(Deck *deck){
 int to_string(const Card card, char *str){
     return sprintf(str, "%s%s", ranks[card.rank], suits[card.suit]);
 }
+
+int print_card(const Card card) {
+    return printf("%s%s", ranks[card.rank], suits[card.suit]);
+}

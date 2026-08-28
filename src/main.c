@@ -6,7 +6,7 @@ int main(void) {
 
     int thresholds[NUM_PLAYERS] = {4,5,6,7};
     Player players[NUM_PLAYERS] = {
-                    make_player(threshold_action, &thresholds[0]),
+                    make_player(human_action, NULL),
                     make_player(threshold_action, &thresholds[1]),
                     make_player(threshold_action, &thresholds[2]),
                     make_player(threshold_action, &thresholds[3])

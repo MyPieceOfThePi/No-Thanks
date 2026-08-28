@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Iinclude
-SRCS = $(wildcard src/*.c) $(wildcard src/Bots/*.c)
+CFLAGS = -Iinclude -g
+SRCS = $(wildcard src/*.c) $(wildcard src/bots/*.c)
 TARGET = bin/NoThanks
 
 all:
@@ -8,3 +8,6 @@ all:
 
 clean:
 	rm -f $(TARGET)
+
+run: all
+	$(TARGET)
